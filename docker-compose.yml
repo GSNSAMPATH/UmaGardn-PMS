@@ -26,7 +26,7 @@ services:
         condition: service_healthy
     environment:
       ASPNETCORE_ENVIRONMENT: Production
-      ConnectionStrings__DefaultConnection: "Host=hotelpms_db;Port=5432;Database=hotelpms;Username=hoteluser;Password=hotelpass"
+      ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=db_Umagarden;Username=hoteluser;Password=hotelpass"
     volumes:
       - hotel_images:/app/wwwroot/images
     ports:
