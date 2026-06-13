@@ -1,6 +1,6 @@
 // src/lib/api.ts
 export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://72.62.244.245:5122";
+  process.env.NEXT_PUBLIC_API_URL ?? "http://187.127.113.203:5122";
 
 type Params = Record<string, string | number | boolean | null | undefined>;
 
