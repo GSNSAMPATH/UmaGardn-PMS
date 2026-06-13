@@ -61,7 +61,7 @@ jobs:
           timeout: 120s
           command_timeout: 30m
           script: |
-            cd "/opt/pms/UMAGARDEN"
+            cd "/opt/pms/umagarden"
             docker compose pull
             docker compose up -d
             docker image prune -f
