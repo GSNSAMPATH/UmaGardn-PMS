@@ -41,7 +41,7 @@ jobs:
           file: ./pms-frontend/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/Umagarden-web:latest
+            ghcr.io/${{ github.repository_owner }}/scenery-villas-web:latest
 
   deploy:
     needs: build_and_push
