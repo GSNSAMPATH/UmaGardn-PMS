@@ -7,31 +7,31 @@ const slides = [
     title: "Manage Your Entire Hotel Operations Smoothly From One System",
     description:
       "Handle all hotel operations including reservations, check-ins, check-outs, billing, staff assignments, and guest communications efficiently.",
-    image: "IMG-20250927-WA0016.jpg",
+    image: "/6f09b07e89089912658e092ce6fc5cafbcd5c1a1 (1).jpg",
   },
   {
     title: "Enhance Guest Experience With Personalized Services and Notifications",
     description:
       "Offer tailored experiences, send automated alerts, and respond to guest requests promptly creating memorable stays.",
-    image: "IMG-20250927-WA0043.jpg",
+    image: "/233f80637ed09695be5a26bcf10c0fdfbd46fb97.webp",
   },
   {
     title: "Access Your Hotel Data Securely Anytime From Anywhere in Cloud",
     description:
       "Your hotel’s information is protected and accessible from any device ensuring real-time updates and data safety.",
-    image: "IMG-20250927-WA0049.jpg",
+    image: "/b5c26d040df9f5cb879895946cac5733ed1565a7.webp",
   },
   {
     title: "Get Detailed Reports and Insights for Smarter Hotel Decisions",
     description:
       "Generate comprehensive reports on revenue, occupancy, bookings, and staff performance for informed decisions.",
-    image: "IMG-20250927-WA0037.jpg",
+    image: "/d27c054740ae8e347208491d463af4649537aa2b.webp",
   },
   {
     title: "Keep Track of Room Availability and Status in Real-Time",
     description:
       "Monitor room status instantly and ensure each room is ready for guests improving operational efficiency.",
-    image: "IMG-20250927-WA0035.jpg",
+    image: "/DJI_20260315155148_0019_D.webp",
   },
 ];
 
