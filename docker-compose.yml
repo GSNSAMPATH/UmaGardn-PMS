@@ -18,7 +18,7 @@ services:
       retries: 10
 
   api:
-    image: ghcr.io/novrithtechnolgy-sys/umagarden-api:latest
+    image: ghcr.io/${{ env.IMAGE_OWNER }}/umagarden-api:latest
     container_name: hotelpms_api
     restart: unless-stopped
     depends_on:
@@ -33,7 +33,7 @@ services:
       - "5122:8080"   
 
   web:
-    image: ghcr.io/novrithtechnolgy-sys/umagarden-web:latestpath
+    image: ghcr.io/${{ env.IMAGE_OWNER }}/umagarden-web:latest
     container_name: hotelpms_web
     restart: unless-stopped
     depends_on:
