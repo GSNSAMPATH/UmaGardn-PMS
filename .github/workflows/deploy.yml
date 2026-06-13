@@ -10,6 +10,10 @@ permissions:
   contents: read
   packages: write
 
+env:
+REGISTRY: ghcr.io
+IMAGE_OWNER: gsnsampath
+
 jobs:
   build_and_push:
     runs-on: ubuntu-latest

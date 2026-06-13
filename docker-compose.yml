@@ -18,7 +18,7 @@ services:
       retries: 10
 
   api:
-    image: ghcr.io/novrithtechnolgy-sys/SCENERY-VILLAS-api:latest
+    image: ghcr.io/novrithtechnolgy-sys/umagarden-api:latest
     container_name: hotelpms_api
     restart: unless-stopped
     depends_on:
@@ -33,7 +33,7 @@ services:
       - "5122:8080"   # change to 5000:80 if your API listens on 80
 
   web:
-    image: ghcr.io/novrithtechnolgy-sys/SCENERY-VILLAS-web:latestpath
+    image: ghcr.io/novrithtechnolgy-sys/umagarden-web:latestpath
     container_name: hotelpms_web
     restart: unless-stopped
     depends_on:
