@@ -1,0 +1,42 @@
+# =====================
+# Node / Next.js
+# =====================
+node_modules/
+.next/
+out/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.env
+.env.local
+.env.*.local
+
+# =====================
+# .NET / Visual Studio
+# =====================
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.pdb
+*.log
+.vs/
+.vscode/
+*.db
+
+# =====================
+# Docker
+# =====================
+**/docker-data/
+**/pgdata/
+*.tar
+*.tar.gz
+
+# =====================
+# OS files
+# =====================
+.DS_Store
+Thumbs.db

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Invoice</title>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      width: 820px;
+      margin: 0 auto;
+      padding: 40px;
+      color: #000;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .muted {
+      color: #555;
+      font-size: 13px;
+    }
+
+    .invoice-title {
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    .balance-box {
+      border: 1px solid #ccc;
+      padding: 14px;
+      width: 260px;
+      margin-top: 20px;
+    }
+
+    .balance-box h3 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: normal;
+    }
+
+    .balance-box h2 {
+      margin: 6px 0 0;
+      font-size: 26px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f3f3f3;
+      text-align: left;
+    }
+
+    .right {
+      text-align: right;
+    }
+
+    .totals {
+      width: 360px;
+      margin-left: auto;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .totals div {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+    }
+
+    .totals .bold {
+      font-weight: bold;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 13px;
+    }
+
+    .policy {
+      margin-top: 25px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .page-footer {
+      margin-top: 40px;
+      font-size: 11px;
+      color: #777;
+      text-align: center;
+    }
+
+    img.logo {
+      height: 55px;
+      margin-bottom: 8px;
+    }
+
+    /* PAGE BREAK */
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= PAGE 1 : INVOICE ================= -->
+
+  <!-- HEADER -->
+  <div class="row">
+    <div>
+      <img src="/image.webp" class="logo" />
+      <div><strong>Scenery Villas</strong></div>
+      <div class="muted">Sri Lanka</div>
+      <div class="muted">admin@sceneryvillassrilanka.com</div>
+    </div>
+
+    <div style="text-align:right">
+      <div class="invoice-title">INVOICE</div>
+      <div class="muted"># {{invoiceNumber}}</div>
+    </div>
+  </div>
+
+  <!-- BALANCE + META -->
+  <div class="row">
+    <div class="balance-box">
+      <h3>Balance Due</h3>
+      <h2>LKR {{balanceDue}}</h2>
+    </div>
+
+    <div class="muted" style="margin-top:20px">
+      <div><b>Invoice Date :</b> {{invoiceDate}}</div>
+      <div><b>Terms :</b> Due on Receipt</div>
+      <div><b>Due Date :</b> {{dueDate}}</div>
+    </div>
+  </div>
+
+  <!-- BILL TO -->
+  <div style="margin-top:25px">
+    <strong>{{guestName}}</strong>
+  </div>
+
+  <!-- ITEMS TABLE -->
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Description</th>
+        <th class="right">Qty</th>
+        <th class="right">Rate</th>
+        <th class="right">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{items}}
+    </tbody>
+  </table>
+
+  <!-- TOTALS -->
+  <div class="totals">
+    <div>
+      <span>Sub Total</span>
+      <span>{{subTotal}}</span>
+    </div>
+    <div class="bold">
+      <span>Total</span>
+      <span>LKR {{total}}</span>
+    </div>
+    <div>
+      <span>Payment Made (-)</span>
+      <span>{{paid}}</span>
+    </div>
+    <div class="bold" style="border-top:1px solid #ccc;padding-top:8px">
+      <span>Balance Due</span>
+      <span>LKR {{balanceDue}}</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    We look forward to providing you with an exceptional stay.
+  </div>
+
+  <!-- ================= PAGE BREAK ================= -->
+  <div class="page-break"></div>
+
+  <!-- ================= PAGE 2 : GUEST POLICIES ================= -->
+
+  <h2 style="margin-top:100px;">Guest Policies & Instructions</h2>
+
+  <div class="policy">
+    <b>Check-In Time:</b> 12:00 PM<br>
+    <b>Check-Out Time:</b> 10:00 AM<br><br>
+
+    <b>Extended Stay:</b> Additional hours may be granted based on availability at a rate of LKR 2,000 per hour.<br><br>
+
+    <b>Quiet Hours:</b> Loud music or noise is not permitted after 11:30 PM.<br><br>
+
+    <b>Chef Services:</b> Available from 8:00 AM to 10:00 PM.<br><br>
+
+    <b>Damage Policy:</b> Guests are responsible for any damages incurred during their stay.<br><br>
+
+    <b>Payment Terms:</b> Advance payments are non-refundable.<br><br>
+
+    <b>Cancellation Policy:</b> Reschedule within 30 days with at least 14 days’ notice.<br><br>
+
+    <b>Guest Capacity:</b> No more than the mentioned guest count is allowed unless approved.
+  </div>
+
+  <div class="page-footer">
+    Crafted with ease using Zoho Invoice
+  </div>
+
+</body>
+</html>

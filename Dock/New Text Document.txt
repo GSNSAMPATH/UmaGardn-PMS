@@ -1,0 +1,65 @@
+Enter file in which to save the key (C:\Users\sumal/.ssh/id_ed25519):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in C:\Users\sumal/.ssh/id_ed25519
+Your public key has been saved in C:\Users\sumal/.ssh/id_ed25519.pub
+The key fingerprint is:
+SHA256:na8lrb96pclUtLXml8+EE89qNhFAJeQJfUVmm+J1aZ8 novrithtechnology@gmail.com
+The key's randomart image is:
++--[ED25519 256]--+
+|          .++..o=|
+|           ooooo=|
+|            o= Oo|
+|         . .. Oo+|
+|        S o  ooEo|
+|           o. =o=|
+|          .o++ *o|
+|           == = o|
+|          ++o+ . |
++----[SHA256]-----+
+
+C:\Users\sumal>type $env:USERPROFILE\.ssh\id_ed25519.pub
+The filename, directory name, or volume label syntax is incorrect.
+
+C:\Users\sumal>type sumal/.ssh/id_ed25519.pub
+The syntax of the command is incorrect.
+
+C:\Users\sumal>type %USERPROFILE%\.ssh\id_ed25519.pub
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPNMJy92zfP9IvR7ctmHJ/YqqE0KkBXdduOwDHBtVuB7 novrithtechnology@gmail.com
+
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPNMJy92zfP9IvR7ctmHJ/YqqE0KkBXdduOwDHBtVuB7 novrithtechnology@gmail.com
+
+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
+
+
+
+
+
+
+{
+  "newBookings": 130,
+  "checkIns": 45,
+  "checkOuts": 30,
+  "roomsAvailable": 12,
+
+  "totalRooms": 50,
+  "roomsOccupied": 38,
+  "Reserved": 22,
+  "Available": 22,
+  "Not Ready": 24
+
+  "newBookingsLastWeek": 40,
+  "checkInsLastWeek": 18,
+  "checkOutsLastWeek": 12,
+  "roomsAvailableLastWeekAvg": 10
+}
+
+
+this data to if req week so this week and last week and if month this month and last month
+
+
+/api/Dashboard/admin/overview?range=Monthly&month=1&year=2026
+
+
+
+

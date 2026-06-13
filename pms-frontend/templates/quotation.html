@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quotation</title>
+
+  <style>
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      width: 820px;
+      margin: 0 auto;
+      padding: 40px;
+      color:#000;
+    }
+    .row{display:flex;justify-content:space-between;align-items:flex-start;}
+    .muted{color:#555;font-size:13px;}
+    .title{font-size:26px;font-weight:700;}
+    .badge{
+      border:1px solid #ccc;
+      padding:14px;
+      width:260px;
+      margin-top:20px;
+    }
+    .badge h3{margin:0;font-size:14px;font-weight:normal;}
+    .badge h2{margin:6px 0 0;font-size:26px;}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:25px;
+      font-size:14px;
+    }
+    th, td{
+      border:1px solid #ccc;
+      padding:8px;
+      vertical-align:top;
+    }
+    th{background:#f3f3f3;text-align:left;}
+    .right{text-align:right;}
+    .totals{
+      width:360px;
+      margin-left:auto;
+      margin-top:20px;
+      font-size:14px;
+    }
+    .totals div{
+      display:flex;
+      justify-content:space-between;
+      padding:4px 0;
+    }
+    .totals .bold{font-weight:bold;}
+    .footer{margin-top:30px;font-size:13px;}
+    .terms{margin-top:25px;font-size:13px;line-height:1.6;}
+    .page-footer{margin-top:40px;font-size:11px;color:#777;text-align:center;}
+    img.logo{height:55px;margin-bottom:8px;}
+    .two-col{display:flex;gap:40px;margin-top:20px;}
+    .col{flex:1;}
+    .boxline{margin-top:6px;}
+    .kv{margin:5px 0;}
+    .page-break{page-break-before:always;}
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= PAGE 1 : QUOTATION ================= -->
+
+  <!-- HEADER -->
+  <div class="row">
+    <div>
+      <img src="{{logoUrl}}" class="logo" />
+      <div><strong>{{companyName}}</strong></div>
+      <div class="muted">{{companyAddress}}</div>
+      <div class="muted">{{companyEmail}}</div>
+      <div class="muted">{{companyPhone}}</div>
+    </div>
+
+    <div style="text-align:right">
+      <div class="title">QUOTATION</div>
+      <div class="muted"># {{quoteNumber}}</div>
+    </div>
+  </div>
+
+  <!-- AMOUNT + META -->
+  <div class="row">
+    <div class="badge">
+      <h3>Quotation Total</h3>
+      <h2>LKR {{totalAmount}}</h2>
+    </div>
+
+    <div class="muted" style="margin-top:20px">
+      <div class="kv"><b>Quote Date :</b> {{quoteDate}}</div>
+      <div class="kv"><b>Valid Until :</b> {{validUntil}}</div>
+      <div class="kv"><b>Currency :</b> LKR</div>
+    </div>
+  </div>
+
+  <!-- BILL TO + STAY INFO -->
+  <div class="two-col">
+    <div class="col">
+      <div class="boxline"><b>Prepared For</b></div>
+      <div class="boxline"><strong>{{guestName}}</strong></div>
+      <div class="muted">{{guestPhone}}</div>
+      <div class="muted">{{guestIdType}} : {{guestIdNumber}}</div>
+    </div>
+
+    <div class="col">
+      <div class="boxline"><b>Stay Details</b></div>
+      <div class="muted">Check-in: {{checkin}}</div>
+      <div class="muted">Check-out: {{checkout}}</div>
+      <div class="muted">Nights: {{nights}}</div>
+      <div class="muted">Guests: {{guestsCount}}</div>
+    </div>
+  </div>
+
+  <!-- ITEMS TABLE -->
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Description</th>
+        <th class="right">Qty</th>
+        <th class="right">Rate</th>
+        <th class="right">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{items}}
+    </tbody>
+  </table>
+
+  <!-- TOTALS -->
+  <div class="totals">
+    <div>
+      <span>Room Total</span>
+      <span>{{roomTotal}}</span>
+    </div>
+    <div>
+      <span>Meal Total</span>
+      <span>{{mealTotal}}</span>
+    </div>
+    <div>
+      <span>Add-on Total</span>
+      <span>{{addonTotal}}</span>
+    </div>
+    <div>
+      <span>Discount (-)</span>
+      <span>{{discount}}</span>
+    </div>
+    <div class="bold" style="border-top:1px solid #ccc;padding-top:8px">
+      <span>Total Quotation</span>
+      <span>LKR {{totalAmount}}</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    This quotation is subject to availability at the time of confirmation.
+  </div>
+
+  <!-- ================= PAGE BREAK ================= -->
+  <div class="page-break"></div>
+
+  <!-- ================= PAGE 2 : TERMS & CONDITIONS ================= -->
+
+  <h2 style="margin-top:100px;">Quotation Terms & Conditions</h2>
+
+  <div class="terms">
+    <b>1. Validity:</b> This quotation is valid until <b>{{validUntil}}</b>.<br><br>
+
+    <b>2. Confirmation:</b> Booking will be confirmed only after receiving an advance payment or written confirmation.<br><br>
+
+    <b>3. Rates:</b> Rates are subject to change based on seasonal demand and availability.<br><br>
+
+    <b>4. Check-in/Check-out:</b> Check-in at 12:00 PM and Check-out at 10:00 AM unless otherwise agreed.<br><br>
+
+    <b>5. Cancellation:</b> Cancellation policies apply based on your selected dates and confirmation time.<br><br>
+
+    <b>6. Damages:</b> Guests are responsible for any damages caused during the stay.<br><br>
+
+    <b>7. Add-ons:</b> Optional services (transport, extra bedding, etc.) may be charged per booking or per night.<br><br>
+
+    <b>8. Taxes:</b> Any applicable government taxes will be charged as per regulations.
+  </div>
+
+  <div class="page-footer">
+    Generated by Hotel PMS • {{companyName}}
+  </div>
+
+</body>
+</html>

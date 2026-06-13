@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:18
+    container_name: hotelpms_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: hoteluser
+      POSTGRES_PASSWORD: hotelpass
+      POSTGRES_DB: hotelpms
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hoteluser -d hotelpms"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    image: ghcr.io/novrithtechnolgy-sys/SCENERY-VILLAS-api:latest
+    container_name: hotelpms_api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: "Host=hotelpms_db;Port=5432;Database=hotelpms;Username=hoteluser;Password=hotelpass"
+    volumes:
+      - hotel_images:/app/wwwroot/images
+    ports:
+      - "5122:8080"   # change to 5000:80 if your API listens on 80
+
+  web:
+    image: ghcr.io/novrithtechnolgy-sys/SCENERY-VILLAS-web:latestpath
+    container_name: hotelpms_web
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      NEXT_PUBLIC_API_URL: "http://72.62.244.245:5122"
+      # If your Next.js calls API from the browser, keep localhost:5000
+      # If your Next.js calls API server-side inside container, use: http://api:8080
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:
+  hotel_images:

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Check-out Confirmation</title>
+</head>
+
+<body style="margin:0; padding:0; background:#f4f6f8; font-family:Arial, Helvetica, sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="padding:20px;">
+<tr>
+<td align="center">
+
+<!-- Main Card -->
+<table width="600" cellpadding="0" cellspacing="0"
+style="background:#ffffff; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+
+<!-- Header -->
+<tr>
+<td style="background:#0f172a; padding:24px; text-align:center; color:#ffffff;">
+
+<img
+src="http://localhost:5122/images/Logo.webp"
+alt="Villa Sathkara"
+width="120"
+style="display:block; margin:0 auto 12px; border-radius:8px;"
+/>
+
+<h1 style="margin:0; font-size:24px;">Scenery Villas</h1>
+<p style="margin:6px 0 0; font-size:14px;">Check-out Confirmation</p>
+</td>
+</tr>
+
+<!-- Content -->
+<tr>
+<td style="padding:24px;">
+
+<p style="font-size:16px; margin:0 0 16px;">
+Dear {{GuestName}},
+</p>
+
+<p style="margin:0 0 24px; color:#555;">
+Thank you for staying with <strong>Scenery Villas</strong>.  
+We’re pleased to confirm that your <strong style="color:#dc2626;">check-out has been completed successfully</strong>.
+</p>
+
+<!-- Stay Details -->
+<h3 style="margin-bottom:12px; border-bottom:1px solid #e5e7eb; padding-bottom:6px;">
+🏨 Stay Summary
+</h3>
+
+<table width="100%" style="font-size:14px; color:#333;">
+<tr>
+<td><strong>Booking Reference</strong></td>
+<td align="right">{{BookingRef}}</td>
+</tr>
+<tr>
+<td>Check-in Date</td>
+<td align="right">{{CheckInDate}}</td>
+</tr>
+<tr>
+<td>Check-out Date</td>
+<td align="right">{{CheckOutDate}}</td>
+</tr>
+<tr>
+<td>Actual Check-out Time</td>
+<td align="right">{{ActualCheckOut}}</td>
+</tr>
+<tr>
+<td>Total Guests</td>
+<td align="right">{{TotalGuests}}</td>
+</tr>
+<tr>
+<td>Room / Villa</td>
+<td align="right">{{RoomNumbers}}</td>
+</tr>
+<tr>
+<td>Total Nights</td>
+<td align="right">{{TotalNights}}</td>
+</tr>
+</table>
+
+<!-- Billing Summary -->
+<h3 style="margin:24px 0 12px; border-bottom:1px solid #e5e7eb; padding-bottom:6px;">
+💳 Billing Summary
+</h3>
+
+<table width="100%" style="font-size:14px; color:#333;">
+<tr>
+<td>Total Amount</td>
+<td align="right">Rs {{TotalAmount}}</td>
+</tr>
+<tr>
+<td>Sub-Invoice No</td>
+<td align="right">{{SubInvoiceNumber}}</td>
+</tr>
+<tr>
+<td>Advance Paid</td>
+<td align="right">Rs {{AdvanceAmount}}</td>
+</tr>
+</table>
+
+
+<table width="100%" style="font-size:14px; margin:24px 0 12px; color:#333; border-top:1px solid #e5e7eb">
+<tr style="color: #777;">
+<td><strong>Invoice No</strong></td>
+<td align="right"><strong>{{InvoiceNumber}}</strong></td>
+</tr>
+</table>
+
+<div style="margin:20px 0; padding:16px; background:#eb262656; border-radius:8px; text-align:center;">
+<p style="margin:0; font-size:14px; color:#555;">Total Amount</p>
+<p style="margin:6px 0 0; font-size:22px; font-weight:bold; color:#e40101;">
+Rs {{TotalAmount}}
+</p>
+</div>
+
+<!-- Thank You Box -->
+<div style="margin:24px 0; padding:16px; background:#f8fafc; border-radius:8px;">
+<p style="margin:0; font-size:15px; color:#0f172a; font-weight:bold;">
+🙏 Thank You for Choosing Us!
+</p>
+<p style="margin:8px 0 0; font-size:14px; color:#475569;">
+We truly appreciate your visit and hope you had a comfortable and memorable stay.
+We look forward to welcoming you again soon.
+</p>
+</div>
+
+<p style="margin-top:20px; color:#555; font-size:14px;">
+If you have any feedback or questions, please don’t hesitate to contact us.
+</p>
+
+<p style="margin:16px 0 0;">
+Warm regards,<br/>
+<strong>Scenery Villas</strong><br/>
+📞 076 5840516<br/>
+✉️ SceneryVillas@gmail.com
+</p>
+
+</td>
+</tr>
+
+<!-- Footer -->
+<tr>
+<td style="background:#f8fafc; padding:12px; text-align:center; font-size:12px; color:#777;">
+© {{Year}} Scenery Villas. All rights reserved.
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
