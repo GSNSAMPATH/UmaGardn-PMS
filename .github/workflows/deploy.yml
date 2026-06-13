@@ -22,7 +22,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: ${{ secrets.VPS_USER }}
           password: ${{ github.token }}
 
       - name: Build & push API image
@@ -32,7 +32,7 @@ jobs:
           file: ./HotelPMS-Backend/HotelPMS.API/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/scenery-villas-api:latest
+            ghcr.io/${{ github.repository_owner }}/Umagarden-api:latest
 
       - name: Build & push WEB image
         uses: docker/build-push-action@v6
@@ -41,7 +41,7 @@ jobs:
           file: ./pms-frontend/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/scenery-villas-web:latest
+            ghcr.io/${{ github.repository_owner }}/Umagarden-web:latest
 
   deploy:
     needs: build_and_push
@@ -57,7 +57,7 @@ jobs:
           timeout: 120s
           command_timeout: 30m
           script: |
-            cd "/opt/pms/SCENERY VILLAS"
+            cd "/opt/pms/UMAGARDEN"
             docker compose pull
             docker compose up -d
             docker image prune -f
