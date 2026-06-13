@@ -30,7 +30,7 @@ services:
     volumes:
       - hotel_images:/app/wwwroot/images
     ports:
-      - "5122:8080"   # change to 5000:80 if your API listens on 80
+      - "5122:8080"   
 
   web:
     image: ghcr.io/novrithtechnolgy-sys/umagarden-web:latestpath
