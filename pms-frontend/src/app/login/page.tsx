@@ -71,7 +71,7 @@ export default function LoginPage() {
         <p className="text-sm font-semibold mb-12">Novrith PMS</p>
 
         <h1 className="text-3xl font-bold mb-2">
-          Welcome Back to Scenery Villas 
+          Welcome Back to UmaGarden PMS
         </h1>
         <p className="text-gray-500 mb-16">Sign in your account</p>
 

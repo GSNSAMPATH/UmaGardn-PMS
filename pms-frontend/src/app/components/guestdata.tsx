@@ -157,7 +157,7 @@ export default function GuestPage() {
   return (
     <div className="bg-gray-50 min-h-screen py-16 text-gray-500">
       {/* ================= HEADER ================= */}
-      <div className="flex items-center justify-between bg-white py-4 px-6 rounded-xl shadow-sm">
+      <div className="flex items-center justify-between bg-white py-4 px-6  shadow-sm">
         <h2 className="text-[20px] font-inter font-semibold text-gray-800">Guest Details</h2>
 
         <div className="flex items-center gap-3 z-10">
@@ -210,7 +210,7 @@ export default function GuestPage() {
         <div className="p-6 rounded-xl font-inter">
           {/* Header table (sticky-like) */}
           <Table>
-            <TableHeader className="sticky top-0 bg-white z-5 ">
+            <TableHeader className=" top-0 bg-white z-5 ">
               <TableRow>
                 <TableHead className="text-center w-20 text-[14px]">ID</TableHead>
                 <TableHead className="text-center w-30 text-[14px]">First Name</TableHead>
@@ -224,12 +224,12 @@ export default function GuestPage() {
                 <TableHead className="text-center text-[14px]">Actions</TableHead>
               </TableRow>
             </TableHeader>
-          </Table>
+       
 
           {/* Body scroll */}
-          <div className="max-h-[500px] font-inter  overflow-y-auto hide-scrollbar">
-            <Table>
-              <TableBody>
+          {/* <div className="h-[1000px] lg:max-h-[400px] font-inter  overflow-y-auto hide-scrollbar"> */}
+       
+              <TableBody >
                 {filteredGuests.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={10} className="text-center py-10 text-gray-400">
@@ -276,7 +276,7 @@ export default function GuestPage() {
                 ))}
               </TableBody>
             </Table>
-          </div>
+          {/* </div> */}
         </div>
       )}
 

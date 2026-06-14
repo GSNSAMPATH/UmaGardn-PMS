@@ -460,30 +460,43 @@ export default function AdminDashboard() {
             />
           </div>
 
-<div className="flex gap-4  items-stretch">
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4">
+  <StatCard
+    title="New Bookings"
+    value={safeNum(ov.newBookings)}
+    tag={<FaBook />}
+    color="blue"
+  />
 
-  <div className="flex-1">
-    <StatCard title="New Bookings" value={safeNum(ov.newBookings)} tag={<FaBook />} color="blue" />
-  </div>
+  <StatCard
+    title="Checked In"
+    value={safeNum(ov.checkIns)}
+    tag={<FaRightToBracket />}
+    color="green"
+  />
 
-  <div className="flex-1">
-    <StatCard title="Checked In" value={safeNum(ov.checkIns)} tag={<FaRightToBracket />} color="green" />
-  </div>
+  <StatCard
+    title="Checked Out"
+    value={safeNum(ov.checkOuts)}
+    tag={<FaRightFromBracket />}
+    color="red"
+  />
 
-  <div className="flex-1">
-    <StatCard title="Checked Out" value={safeNum(ov.checkOuts)} tag={<FaRightFromBracket />} color="red" />
-  </div>
+  <StatCard
+    title="Occupied Rooms"
+    value={safeNum(ov.roomsOccupied)}
+    tag={<FaRightToBracket />}
+    color="orange"
+  />
 
-  <div className="flex-1">
-    <StatCard title="Occupied Rooms" value={safeNum(ov.roomsOccupied)} tag={<FaRightToBracket />} color="orange" />
-  </div>
+  <StatCard
+    title="Cancelled Bookings"
+    value={safeNum(ov.cancelledBookings)}
+    tag={<FaTimesCircle />}
+    color="red"
+  />
 
-  <div className="flex-1 ">
-    <StatCard title="Cancelled Bookings" value={safeNum(ov.cancelledBookings)} tag={<FaTimesCircle  />} color="red" />
-  </div>
-
-  {/* LONG REVENUE CARD */}
-  <div className="flex-[2] w-[300px] ">
+  <div className="xl:col-span-2">
     <StatCard
       title="Today's Revenue"
       value={formatLKR(todayRevenue)}
@@ -491,7 +504,6 @@ export default function AdminDashboard() {
       color="purple"
     />
   </div>
-
 </div>
 
 

@@ -332,12 +332,12 @@ export default function BookingCalendar() {
 
   return (
     <section className="bg-gray-100 min-h-screen py-16 font-inter">
-      <div className="flex flex-row items-center bg-white py-2.5 px-8 text-gray-600 ">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-0 items-start md:items-center bg-white py-3 px-4 md:px-8 text-gray-800 ">
         <h2 className="text-[20px] font-semibold flex flex-1">
           Reservation Calendar
         </h2>
 
-        <div className="flex items-center justify-between px-4 py-3 border-indigo-500 bg-white w-full flex-4">
+        <div className="flex items-center justify-between w-full md:w-auto md:min-w-[350px] px-2 md:px-4 py-3">
           <button
             onClick={() =>
               setCurrent(
@@ -388,11 +388,13 @@ export default function BookingCalendar() {
         </div>
       </div>
 
-      <div className="text-gray-800 p-6">
+      <div className="text-gray-800 p-3 md:p-6">
+        <div className="overflow-x-auto">
+          <div className="min-w-[1200px]">
         <div className="pb-10 space-y-1">
           <div
             className="grid bg-white py-2 text-[16px] rounded-xl"
-            style={{ gridTemplateColumns: "80px 115px 110px 1fr" }}
+            style={{ gridTemplateColumns: "70px 100px 100px 1fr" }}
           >
             <div className="col-span-31 text-center py-2 font-medium">
               {current.toLocaleString("default", { month: "long" })}
@@ -401,7 +403,7 @@ export default function BookingCalendar() {
 
           <div
             className="grid text-[14px] bg-white rounded-xl py-2 text-right"
-            style={{ gridTemplateColumns: "80px 115px 110px 1fr" }}
+            style={{ gridTemplateColumns: "70px 100px 100px 1fr" }}
           >
             <div className="p-2 font-semibold border-r border-gray-300">
               Room No
@@ -434,7 +436,7 @@ export default function BookingCalendar() {
             <div
               key={room.id}
               className="relative grid border-b bg-white rounded-xl text-gray-200 text-[14px] items-center"
-              style={{ gridTemplateColumns: "80px 110px 115px 1fr" }}
+              style={{ gridTemplateColumns: "70px 100px 100px 1fr" }}
             >
               <div className="p-4 text-gray-500 border-r border-gray-300">
                 {room.number}
@@ -491,7 +493,7 @@ export default function BookingCalendar() {
                     return (
                       <div
                         key={`${b.booking_ref}-${b.roomId}-${i}`}
-                        className={`absolute top-2 h-[55px] text-black border border-l-7 border-gray-200 text-xs px-2 flex items-center cursor-pointer ${bookingColor(
+                        className={`absolute top-2 h-[40px] md:h-[55px] text-black border border-l-7 border-gray-200 text-xs px-2 flex items-center cursor-pointer ${bookingColor(
                           b.status
                         )}`}
                         style={{
@@ -506,7 +508,7 @@ export default function BookingCalendar() {
                         onMouseLeave={hideHover}
                       >
                         {!startsBeforeMonth && (
-                          <span className="truncate">{b.label}</span>
+                          <span className="truncate text-[10px] md:text-xs">{b.label}</span>
                         )}
                       </div>
                     );
@@ -515,12 +517,14 @@ export default function BookingCalendar() {
             </div>
           ))}
         </div>
+        </div>
+        </div>
       </div>
 
       {/* ✅ FIXED HOVER CARD (auto up/down + never off-screen) */}
       {hovered && hoverMeta && (
         <div
-          className="fixed z-[999999]"
+          className="hidden md:block fixed z-[999999]"
           style={{ top: hoverMeta.top, left: hoverMeta.left }}
           onMouseEnter={() => setHovered(hovered)}
           onMouseLeave={hideHover}

@@ -69,7 +69,7 @@ export default function TopNav({ onMenuClick }: { onMenuClick: () => void }) {
         </div>
 
         {/* Center - Search */}
-        <div className="hidden md:flex items-center font-[inter] bg-neutral-800 px-3 py-1 rounded-full w-96">
+        <div className="hidden lg:flex items-center font-[inter] bg-neutral-800 px-3 py-1 rounded-full w-96">
           <FaSearch className="text-gray-400" />
           <input
             type="text"
