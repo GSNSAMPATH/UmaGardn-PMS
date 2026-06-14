@@ -14,7 +14,7 @@ namespace HotelPMS.Domain.Entities
         public int RoomId { get; set; }
         public string RoomCode { get; set; }
         public string RoomNumber { get; set; } = string.Empty;
-        public int Floor { get; set; }
+        public int Floor { get; set; } = 0;
         public RoomStatus Status { get; set; } = RoomStatus.Available;
         public int RoomTypeId { get; set; }
         public RoomType RoomType { get; set; } = null!;

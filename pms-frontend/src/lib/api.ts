@@ -9,6 +9,26 @@ export type ApiOptions = Omit<RequestInit, "headers"> & {
   headers?: HeadersInit;
 };
 
+function handleUnauthorized() {
+  if (typeof window === "undefined") return;
+
+  try {
+    const Cookies = require("js-cookie");
+
+    Cookies.remove("token");
+    Cookies.remove("refreshToken");
+  } catch {}
+
+    const confirmed = window.confirm(
+    "Your session has expired. Click OK to login again."
+  );
+
+  if (!confirmed) return;
+
+  localStorage.clear();
+  window.location.href = "/login";
+}
+
 function buildUrl(path: string, params?: Params) {
   const base = API_BASE_URL.replace(/\/$/, "");
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
@@ -101,6 +121,11 @@ export async function apiFetch<T>(
     headers: finalHeaders,
     cache: "no-store",
   });
+
+  if (res.status === 401) {
+    handleUnauthorized();
+  }
+ 
 
   if (!res.ok) {
     const body = await readBody(res);

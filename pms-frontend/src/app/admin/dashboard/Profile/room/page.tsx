@@ -31,7 +31,7 @@ type Room = {
   roomId: number;
   roomCode: string;
   roomNumber: string;
-  floor: string;
+  // floor?: string;
   status: string;
   roomTypeId: number;
   roomTypeName?: string;
@@ -64,7 +64,7 @@ export default function RoomPage() {
 
   const [form, setForm] = useState({
     roomNumber: "",
-    floor: "",
+    // floor: "0",
     status: "",
     roomTypeId: "",
   });
@@ -112,7 +112,7 @@ export default function RoomPage() {
   const handleReset = () => {
     setForm({
       roomNumber: "",
-      floor: "",
+      // floor: "0",
       status: "",
       roomTypeId: "",
     });
@@ -126,7 +126,7 @@ export default function RoomPage() {
     setRoomId(room.roomId);
     setForm({
       roomNumber: room.roomNumber ?? "",
-      floor: room.floor ?? "",
+      // floor: room.floor ?? "",
       status: room.status ?? "",
       roomTypeId: String(room.roomTypeId ?? ""),
     });
@@ -142,7 +142,7 @@ export default function RoomPage() {
     try {
       const formData = new FormData();
       formData.append("RoomNumber", form.roomNumber);
-      formData.append("Floor", form.floor);
+      // formData.append("Floor", form.floor);
       formData.append("Status", form.status);
       formData.append("RoomTypeId", form.roomTypeId);
 
@@ -187,16 +187,16 @@ export default function RoomPage() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-gray-600 ">
               <div>
                 <Label className="flex items-center gap-2 mb-1">
-                  <FaBed size={18} /> Room Name/Room Number
+                  <FaBed size={18} /> Room Number
                 </Label>
                 <Input
                   value={form.roomNumber}
                   onChange={(e) => updateField("roomNumber", e.target.value)}
-                  placeholder="Enter room name"
+                  placeholder="Enter room number"
                 />
               </div>
 
-              <div>
+              {/* <div>
                 <Label className="flex items-center gap-2 mb-1">
                   <MdDescription size={18} /> Floor
                 </Label>
@@ -205,7 +205,7 @@ export default function RoomPage() {
                   onChange={(e) => updateField("floor", e.target.value)}
                   placeholder="Enter floor"
                 />
-              </div>
+              </div> */}
 
               <div>
                 <Label className="flex items-center gap-2 mb-1">
@@ -277,7 +277,7 @@ export default function RoomPage() {
                 <TableRow className=" bg-gray-100">
                   <TableHead>Room Code</TableHead>
                   <TableHead>Room Number</TableHead>
-                  <TableHead>Floor</TableHead>
+                  {/* <TableHead>Floor</TableHead> */}
                   <TableHead>Status</TableHead>
                   <TableHead>Room Type</TableHead>
                   <TableHead>Bed Type</TableHead>
@@ -294,7 +294,7 @@ export default function RoomPage() {
                     <TableRow key={index}>
                       <TableCell>{room.roomCode}</TableCell>
                       <TableCell>{room.roomNumber}</TableCell>
-                      <TableCell>{room.floor}</TableCell>
+                      {/* <TableCell>{room.floor}</TableCell> */}
                       <TableCell>{room.status}</TableCell>
                       <TableCell>{room.roomTypeName}</TableCell>
                       <TableCell>{room.bedType}</TableCell>
