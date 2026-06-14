@@ -61,7 +61,7 @@ export default function TopNav({ onMenuClick }: { onMenuClick: () => void }) {
 
   return (
     <div className="fixed top-0 w-full h-16 bg-black text-white flex items-center justify-between px-4 shadow z-50">
-      <div className="flex items-center justify-between gap-10">
+      <div className="flex items-center justify-between gap-10 lg:w-3/5">
         {/* Left */}
         <div className="flex items-center gap-4">
           <FaBars className="font-[inter] text-[16px] cursor-pointer" onClick={onMenuClick} />
