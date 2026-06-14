@@ -691,7 +691,7 @@ useEffect(() => {
         {/* RESERVATION INFO */}
         <Section title="Reservation Info">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex gap-6">
+          <div className="flex gap-4">
             <div className="w-full">
               <Label className="flex items-center gap-2 mb-1 text-sm">
                 <FaCalendar size={12} /> Check-In
@@ -703,7 +703,7 @@ useEffect(() => {
                     placeholder="Check-In"
                     onChange={(e) => setCheckin(e.target.value)}
                     className="
-                          pr-12
+                          lg:pr-12
                           appearance-none
                           // [&::-webkit-calendar-picker-indicator]:opacity-0
                           [&::-webkit-calendar-picker-indicator]:absolute
@@ -726,7 +726,7 @@ useEffect(() => {
                 value={checkout}
                 onChange={(e) => setCheckout(e.target.value)}
                 className="
-                  pr-12
+                  lg:pr-12
                   appearance-none
                   // [&::-webkit-calendar-picker-indicator]:opacity-0
                   [&::-webkit-calendar-picker-indicator]:absolute
@@ -739,7 +739,7 @@ useEffect(() => {
         </div>
             </div>
         </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 ">
             <div>
               <Label className="flex items-center gap-2 mb-1 text-sm">
                 <FaMoon size={12} /> Night
