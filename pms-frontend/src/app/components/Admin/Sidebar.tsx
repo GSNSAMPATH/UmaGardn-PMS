@@ -8,11 +8,15 @@ import { GrDashboard } from "react-icons/gr";
 import { TbFlagCancel } from "react-icons/tb";
 
 
-export default function Sidebar({ open }: { open: boolean }) {
+export default function Sidebar({ open,onClose, }: { open: boolean; onClose: () => void; }) {
   const pathname = usePathname();
   const [profileOpen, setProfileOpen] = useState(false);
 
-
+const handleMobileClose = () => {
+  if (window.innerWidth < 1024) {
+    onClose();
+  }
+};
     const router = useRouter();
   // Auto-open Profile dropdown if user is inside `/admin/dashboard/Profile/*`
   useEffect(() => {
@@ -51,6 +55,7 @@ export default function Sidebar({ open }: { open: boolean }) {
         {/* Dashboard */}
         <Link
           href="/admin/dashboard"
+          onClick={handleMobileClose}
           className={`p-3 flex items-center gap-3 hover:rounded-xl hover:bg-gray-100 rounded ${isActive("/admin/dashboard")}`}
         >
           <GrDashboard /> Dashboard
@@ -79,6 +84,7 @@ export default function Sidebar({ open }: { open: boolean }) {
 
             <Link
               href="/admin/dashboard/Profile/hotel"
+              onClick={handleMobileClose}
               className={`p-2 hover:bg-gray-100 rounded-xl 
               ${isSubActive("/admin/dashboard/Profile/hotel")}`}
             >
@@ -87,6 +93,7 @@ export default function Sidebar({ open }: { open: boolean }) {
 
             <Link
               href="/admin/dashboard/Profile/room"
+              onClick={handleMobileClose}
               className={`p-2 hover:bg-gray-100 rounded-xl 
               ${isSubActive("/admin/dashboard/Profile/room")}`}
             >
@@ -95,6 +102,7 @@ export default function Sidebar({ open }: { open: boolean }) {
 
             <Link
               href="/admin/dashboard/Profile/room_type"
+              onClick={handleMobileClose}
               className={`p-2 hover:bg-gray-100 rounded-xl 
               ${isSubActive("/admin/dashboard/Profile/room_type")}`}
             >
@@ -111,6 +119,7 @@ export default function Sidebar({ open }: { open: boolean }) {
 
             <Link
               href="/admin/dashboard/Profile/staff"
+              onClick={handleMobileClose}
               className={`p-2 hover:bg-gray-100 rounded-xl 
               ${isSubActive("/admin/dashboard/Profile/staff")}`}
             >
@@ -119,6 +128,7 @@ export default function Sidebar({ open }: { open: boolean }) {
 
             <Link
               href="/admin/dashboard/Profile/mealplan"
+              onClick={handleMobileClose}
               className={`p-2 hover:bg-gray-100 rounded-xl 
               ${isSubActive("/admin/dashboard/Profile/mealplan")}`}
             >
@@ -135,6 +145,7 @@ export default function Sidebar({ open }: { open: boolean }) {
 
             <Link
               href="/admin/dashboard/Profile/bookingsorce"
+              onClick={handleMobileClose}
               className={`p-2 hover:bg-gray-100 rounded-xl 
               ${isSubActive("/admin/dashboard/Profile/bookingsorce")}`}
             >
@@ -145,6 +156,7 @@ export default function Sidebar({ open }: { open: boolean }) {
 
         <Link
           href="/admin/reservations"
+          onClick={handleMobileClose}
           className={`p-3 flex items-center gap-3 hover:bg-gray-100 rounded ${isActive("/admin/reservations")}`}
         >
           <FaHotel /> Reservations
@@ -153,6 +165,7 @@ export default function Sidebar({ open }: { open: boolean }) {
         {/* Rooms */}
         <Link
           href="/admin/calender"
+          onClick={handleMobileClose}
           className={`p-3 flex items-center gap-3 hover:rounded-xl hover:bg-gray-100 rounded ${isActive("/admin/calender")}`}
         >
           <FaCalendar />Calender
@@ -161,6 +174,7 @@ export default function Sidebar({ open }: { open: boolean }) {
         {/* Guests */}
         <Link
           href="/admin/guests"
+          onClick={handleMobileClose}
           className={`p-3 flex items-center gap-3 hover:rounded-xl hover:bg-gray-100 rounded ${isActive("/admin/guests")}`}
         >
           <FaUsers /> Guests
@@ -169,6 +183,7 @@ export default function Sidebar({ open }: { open: boolean }) {
          {/* Quotations */}
         <Link
           href="/admin/quotations"
+          onClick={handleMobileClose}
           className={`p-3 flex items-center gap-3 hover:rounded-xl hover:bg-gray-100 rounded ${isActive("/admin/quotations")}`}
         >
           <FaFileInvoice /> Quotations
@@ -177,6 +192,7 @@ export default function Sidebar({ open }: { open: boolean }) {
         {/* Settings */}
         <Link
           href="/admin/booking_cancel"
+          onClick={handleMobileClose}
           className={`p-3 flex items-center gap-3 hover:bg-gray-100 rounded ${isActive("/admin/booking_cancel")}`}
         >
           <FaRemoveFormat /> Booking Cancel

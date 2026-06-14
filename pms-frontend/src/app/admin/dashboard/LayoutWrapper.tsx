@@ -19,7 +19,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   return (
     <div>
       <TopNav onMenuClick={() => setOpen(!open)} />
-      {role === "Admin" ? <AdminSidebar open={open} /> : <FrontDeskSidebar open={open} />}
+      {role === "Admin" ? <AdminSidebar open={open} onClose={() => setOpen(false)} /> : <FrontDeskSidebar open={open} onClose={() => setOpen(false)} /> }
       <main className={`min-h-screen  ${open ? "xl:ml-64 w-fixed" : ""}`} >{children}</main>
     </div>
   );

@@ -7,10 +7,16 @@ import { FaHome, FaBed, FaUsers, FaCog, FaFileArchive, FaCalendar, FaSignOutAlt,
 import { FaB, FaR } from "react-icons/fa6";
 import { GrDashboard } from "react-icons/gr";
 
-export default function Sidebar({ open }: { open: boolean }) {
+export default function Sidebar({ open , onClose }: { open: boolean; onClose: () => void }) {
   const pathname = usePathname();
   const [profileOpen, setProfileOpen] = useState(false);
   const router = useRouter();
+
+  const handleMobileClose = () => {
+    if (window.innerWidth < 1024) {
+      onClose();
+    }
+  };
 
   // Auto-open Profile dropdown if user is inside `/admin/dashboard/Profile/*`
   useEffect(() => {
@@ -48,6 +54,7 @@ export default function Sidebar({ open }: { open: boolean }) {
         {/* Dashboard */}
         <Link
           href="/frontdesk/dashboard"
+          onClick={handleMobileClose}
           className={`p-3 flex items-center gap-3 hover:bg-gray-100 rounded ${isActive("/frontdesk/dashboard")}`}
         >
           <GrDashboard /> Dashboard
@@ -84,6 +91,7 @@ export default function Sidebar({ open }: { open: boolean }) {
 
             <Link
               href="/frontdesk/dashboard/Profile/room"
+              onClick={handleMobileClose}
               className={`p-2 px-4 hover:bg-gray-100 rounded-full 
               ${isSubActive("/frontdesk/dashboard/Profile/room")}`}
             >
@@ -100,6 +108,7 @@ export default function Sidebar({ open }: { open: boolean }) {
 
             <Link
               href="/frontdesk/dashboard/Profile/amenity"
+              onClick={handleMobileClose}
               className={`p-2 px-4 hover:bg-gray-100 rounded-full 
               ${isSubActive("/frontdesk/dashboard/Profile/amenity")}`}
             >
@@ -108,6 +117,7 @@ export default function Sidebar({ open }: { open: boolean }) {
 
             <Link
               href="/frontdesk/dashboard/Profile/staff"
+              onClick={handleMobileClose}
               className={`p-2 px-4 hover:bg-gray-100 rounded-full  
               ${isSubActive("/frontdesk/dashboard/Profile/staff")}`}
             >
@@ -127,6 +137,7 @@ export default function Sidebar({ open }: { open: boolean }) {
         {/* Rooms */}
         <Link
           href="/frontdesk/rooms"
+          onClick={handleMobileClose}
           className={`p-3 flex items-center gap-3 hover:bg-gray-100 rounded ${isActive("/frontdesk/rooms")}`}
         >
           <FaBed /> Rooms
@@ -134,6 +145,7 @@ export default function Sidebar({ open }: { open: boolean }) {
 
         <Link
           href="/frontdesk/reservations"
+          onClick={handleMobileClose}
           className={`p-3 flex items-center gap-3 hover:bg-gray-100 rounded ${isActive("/frontdesk/reservations")}`}
         >
           <FaHotel /> Reservations
@@ -141,6 +153,7 @@ export default function Sidebar({ open }: { open: boolean }) {
 
         <Link
           href="/frontdesk/calender"
+          onClick={handleMobileClose}
           className={`p-3 flex items-center gap-3 hover:bg-gray-100 rounded ${isActive("/frontdesk/calender")}`}
         >
           <FaCalendar /> Calendar
@@ -149,6 +162,7 @@ export default function Sidebar({ open }: { open: boolean }) {
         {/* Guests */}
         <Link
           href="/frontdesk/guest"
+          onClick={handleMobileClose}
           className={`p-3 flex items-center gap-3 hover:bg-gray-100 rounded ${isActive("/frontdesk/guest")}`}
         >
           <FaUsers /> Guests
@@ -157,6 +171,7 @@ export default function Sidebar({ open }: { open: boolean }) {
         {/* Quatation */}
         <Link
           href="/frontdesk/quotation"
+          onClick={handleMobileClose}
           className={`p-3 flex items-center gap-3 hover:bg-gray-100 rounded ${isActive("/frontdesk/quotation")}`}
         >
           <FaFileInvoice /> Quotation
