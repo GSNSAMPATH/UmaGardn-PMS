@@ -14,6 +14,7 @@ export async function POST(req: Request) {
 
     const templatePath = path.join(
       process.cwd(),
+      "public",
       "templates",
       "quotation.html"
     );

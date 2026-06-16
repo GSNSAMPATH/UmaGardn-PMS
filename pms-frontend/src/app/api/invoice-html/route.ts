@@ -51,7 +51,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ html: "", error: "Missing booking data" }, { status: 400 });
     }
 
-    const templatePath = path.join(process.cwd(), "templates", "invoice.html");
+    const templatePath = path.join(process.cwd(),"public", "templates", "invoice.html");
 
     if (!fs.existsSync(templatePath)) {
       return NextResponse.json(
