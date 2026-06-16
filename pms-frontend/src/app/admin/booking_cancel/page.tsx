@@ -172,12 +172,14 @@ export default function CancelBookingScreen() {
                 <Label className="flex items-center gap-2 mb-1 text-sm">
                   <FaIdCard size={12} /> ID Number
                 </Label>
-                <Input
-                  placeholder="ID / Passport Number"
-                  value={idNumber}
-                  onChange={(e) => setIdNumber(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && fetchBookingByGuest()}
-                />
+                  <Input
+                    type="search"
+                    enterKeyHint="search"
+                    placeholder="ID / Passport Number"
+                    value={idNumber}
+                    onChange={(e) => setIdNumber(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && fetchBookingByGuest()}
+                  />
               </div>
               <div>
                 <Label className="flex items-center gap-2 mb-1 text-sm">
