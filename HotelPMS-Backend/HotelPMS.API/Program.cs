@@ -43,7 +43,7 @@ builder.Services.AddScoped<IBookingSourceProfileRepository, BookingSourceProfile
 builder.Services.AddScoped<IAddonRepository, AddonRepository>();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<IErrorLogRepository, ErrorLogRepository>();
-
+builder.Services.AddScoped<IQuotationRepository, QuotationRepository>();
 
 
 

@@ -7,6 +7,7 @@ import { Select } from "@/app/components/Select";
 import { Label } from "@/app/components/label";
 import AlertBox from "@/app/components/alert-box";
 import { useFetchData } from "@/app/hooks/useFetchData";
+import QuotationSuccessModal from "./QuotationSuccessModal";
 import { api } from "@/lib/api";
 import { FiX } from "react-icons/fi";
 import {
@@ -25,6 +26,10 @@ const Section = ({ title, children }: any) => (
     {children}
   </div>
 );
+
+type Quotation = {
+  id: number;
+};
 
 type SelectedRoom = {
   roomId: number;
@@ -66,6 +71,12 @@ export default function QuotationScreen() {
 
   // ---------------- Payment ----------------
   const [discount, setDiscount] = useState(0);
+
+  const [showQuotationModal, setShowQuotationModal] =
+  useState(false);
+
+  const [quotationData, setQuotationData] =
+  useState<any>(null);
 
   // ✅ API data
   const { data: roomTypes } = useFetchData<any[]>("/api/RoomTypes", []);
@@ -223,82 +234,163 @@ export default function QuotationScreen() {
   };
 
   // ✅ Generate quotation HTML using your template route
-  const handleGenerateQuotation = async () => {
-    try {
-      if (!guestName?.trim()) {
-        showAlert("error", "Guest name is required");
-        return;
-      }
-      if (!checkin || !checkout) {
-        showAlert("error", "Check-in and Check-out are required");
-        return;
-      }
-      if (!nights || nights <= 0) {
-        showAlert("error", "Invalid date range");
-        return;
-      }
-      if (!selectedRooms.length) {
-        showAlert("error", "Please select at least one room");
-        return;
-      }
+const handleGenerateQuotation = async () => {
+  try {
+    if (!guestName?.trim()) {
+      showAlert("error", "Guest name is required");
+      return;
+    }
 
-      const payload = {
-        quotation: {
-          quoteNumber: "QT-" + Date.now(),
-          guestName,
-          guestPhone: phone,
-          guestIdType: idType,
-          guestIdNumber: idNumber,
-          checkin,
-          checkout,
-          nights,
-          adults,
-          children,
-          roomTotal,
-          mealTotal,
-          addonTotal,
-          discount,
-          totalAmount,
-        },
+    if (!checkin || !checkout) {
+      showAlert(
+        "error",
+        "Check-in and Check-out are required"
+      );
+      return;
+    }
+
+    if (!selectedRooms.length) {
+      showAlert(
+        "error",
+        "Please select at least one room"
+      );
+      return;
+    }
+
+      const savePayload = {
+        name: guestName,
+        idType,
+        idNumber,
+        phone,
+
+        checkinDate: new Date(checkin).toISOString(),
+        checkoutDate: new Date(checkout).toISOString(),
+
+        mealPlanId: selectedMealPlanId
+          ? Number(selectedMealPlanId)
+          : 0,
+
+        addonId:
+          selectedAddons.length > 0
+            ? selectedAddons[0].addonId
+            : 0,
 
         rooms: selectedRooms.map((r) => ({
-          roomNumber: r.roomNumber,
-          roomTypeName:
-            (roomTypes ?? []).find((t: any) => t.roomTypeId === r.roomTypeId)
-              ?.name || "",
-          pricePerNight: r.pricePerNight,
+          roomId: r.roomId,
+          roomTypeId: r.roomTypeId,
         })),
 
-        mealPlan: selectedMealPlan
-          ? { name: selectedMealPlan.name, price: selectedMealPlan.price }
-          : null,
-
-        addons: selectedAddons.map((a) => ({
-          name: a.name,
-          price: a.price,
-        })),
+        adults,
+        children,
+        discount,
       };
 
-      const res = await fetch("/api/quotation/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+    console.log("Saving quotation with payload:", savePayload);
 
-      const data = await res.json();
+    const savedQuotation = await api.post<any>(
+      "/api/Quotation",
+      savePayload
+    );
 
-      if (!res.ok || !data?.html) {
-        throw new Error(data?.error || "Failed to generate quotation");
-      }
+    console.log("Saved quotation:", savedQuotation);
 
-      const w = window.open("", "_blank");
-      w?.document.write(data.html);
-      w?.document.close();
-    } catch (err: any) {
-      console.error(err);
-      showAlert("error", err?.message || "Quotation generation failed");
-    }
+   const quotationPreviewData = {
+    id:
+      savedQuotation?.id ??
+      savedQuotation?.quotationId,
+
+    quoteNumber:
+      savedQuotation?.quoteNumber ??
+      savedQuotation?.quotationNumber ??
+      `QT-${Date.now()}`,
+
+    guestName,
+    guestPhone: phone,
+    guestIdType: idType,
+    guestIdNumber: idNumber,
+
+    checkin,
+    checkout,
+
+    nights,
+    adults,
+    children,
+
+    guestsCount:
+      Number(adults || 0) +
+      Number(children || 0),
+
+    roomTotal,
+    mealTotal,
+    addonTotal,
+    discount,
+    totalAmount,
+
+    quoteDate: new Date().toISOString(),
+
+    validUntil: new Date(
+      Date.now() + 7 * 24 * 60 * 60 * 1000
+    ).toISOString(),
+
+    rooms: selectedRooms.map((r) => ({
+      roomId: r.roomId,
+      roomNumber: r.roomNumber,
+      roomTypeId: r.roomTypeId,
+
+      roomTypeName:
+        roomTypes?.find(
+          (rt: any) =>
+            rt.roomTypeId === r.roomTypeId
+        )?.name ?? "",
+
+      pricePerNight:
+        Number(r.pricePerNight ?? 0),
+    })),
+
+    mealPlan: selectedMealPlan
+      ? {
+          mealPlanId:
+            selectedMealPlan.mealPlanId,
+
+          name:
+            selectedMealPlan.name,
+
+          price:
+            Number(
+              selectedMealPlan.price ?? 0
+            ),
+        }
+      : null,
+
+    addons: selectedAddons.map(
+      (a: any) => ({
+        addonId: a.addonId,
+        name: a.name,
+        price: Number(a.price ?? 0),
+      })
+    ),
   };
+
+  console.log(
+    "Quotation Preview Data:",
+    quotationPreviewData
+  );
+
+  setQuotationData(
+    quotationPreviewData
+  );
+
+    setShowQuotationModal(true);
+  } catch (err: any) {
+    console.error(err);
+
+    showAlert(
+      "error",
+      err?.message ||
+        "Quotation generation failed"
+    );
+  }
+};
 
   const handleReset = () => {
     setIdType("");
@@ -631,6 +723,13 @@ export default function QuotationScreen() {
           </Section>
         </div>
       </div>
+      <QuotationSuccessModal
+      open={showQuotationModal}
+      onClose={() => {
+        setShowQuotationModal(false);
+      }}
+      quotationData={quotationData}
+    />
     </>
   );
 }

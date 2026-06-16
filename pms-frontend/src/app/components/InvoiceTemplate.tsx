@@ -27,7 +27,7 @@ interface InvoiceTemplateProps {
   }>;
 }
 
-export default function InvoiceTemplate({ booking, payments }: InvoiceTemplateProps) {
+ export default function InvoiceTemplate({ booking, payments }: InvoiceTemplateProps) {
   const [html, setHtml] = useState<string>("");
   const [loading, setLoading] = useState(true);
 

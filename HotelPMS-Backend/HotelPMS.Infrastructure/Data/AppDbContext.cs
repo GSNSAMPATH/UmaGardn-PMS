@@ -25,7 +25,8 @@ namespace HotelPMS.Infrastructure.Data
         public DbSet<MealPlan> MealPlans { get; set; }
         public DbSet<Addon> Addons { get; set; } = null!;
         public DbSet<ErrorLog> ErrorLogs { get; set; }
-
+        public DbSet<Quotation> Quotations { get; set; }
+        public DbSet<QuotationRoom> QuotationRooms { get; set; }
 
         //reservation   
         public DbSet<Booking> Bookings { get; set; }
@@ -476,6 +477,80 @@ namespace HotelPMS.Infrastructure.Data
                 entity.Property(e => e.Data)
                     .HasColumnName("data")
                     .HasColumnType("text");
+            });
+
+            modelBuilder.Entity<Quotation>(entity =>
+            {
+                entity.ToTable("Quotations"); // ✅ lowercase table name
+
+                entity.HasKey(q => q.Id);
+
+                entity.Property(q => q.Id)
+                    .HasColumnName("quotation_id");
+
+                entity.Property(q => q.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(100);
+
+                entity.Property(q => q.IdType)
+                    .HasColumnName("id_type")
+                    .HasMaxLength(50);
+
+                entity.Property(q => q.IdNumber)
+                    .HasColumnName("id_number")
+                    .HasMaxLength(50);
+
+                entity.Property(q => q.Phone)
+                    .HasColumnName("phone")
+                    .HasMaxLength(20);
+
+                entity.Property(q => q.CheckinDate)
+                    .HasColumnName("checkin_date");
+
+                entity.Property(q => q.CheckoutDate)
+                    .HasColumnName("checkout_date");
+
+                entity.Property(q => q.MealPlanId)
+                    .HasColumnName("meal_plan_id");
+
+                entity.Property(q => q.AddonId)
+                    .HasColumnName("addon_id");
+
+                entity.Property(q => q.Adults)
+                    .HasColumnName("adults");
+
+                entity.Property(q => q.Children)
+                    .HasColumnName("children");
+
+                entity.Property(q => q.TotalAmount)
+                    .HasColumnName("total_amount");
+
+                entity.Property(q => q.CreatedAt)
+                    .HasColumnName("created_at");
+            });
+
+            modelBuilder.Entity<QuotationRoom>(entity =>
+            {
+                entity.ToTable("QuotationRooms");
+
+                entity.HasKey(qr => qr.Id);
+
+                entity.Property(qr => qr.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(qr => qr.QuotationId)
+                    .HasColumnName("quotation_id");
+
+                entity.Property(qr => qr.RoomId)
+                    .HasColumnName("Room_Id");
+
+                entity.Property(qr => qr.RoomTypeId)
+                    .HasColumnName("room_type_id");
+
+                entity.HasOne(qr => qr.Quotation)
+                    .WithMany(q => q.QuotationRooms)
+                    .HasForeignKey(qr => qr.QuotationId);
             });
 
 

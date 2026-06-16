@@ -57,7 +57,7 @@ export default function FeatureCarousel() {
           {slides.map((slide, i) => (
             <div
               key={i}
-              className="min-w-full grid grid-cols-1 gap-10 items-center px-6"
+              className="min-w-full grid grid-cols-1 gap-10 flex items-center px-6"
             >
               {/* IMAGE */}
               <img
@@ -67,7 +67,7 @@ export default function FeatureCarousel() {
               />
 
               {/* TEXT */}
-              <div className="text-center max-w-2xl">
+              <div className="mx-auto text-center max-w-2xl">
                 <h2 className="text-2xl font-bold mb-4">
                   {slide.title}
                 </h2>

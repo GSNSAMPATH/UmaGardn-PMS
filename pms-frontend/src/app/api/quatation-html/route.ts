@@ -4,181 +4,119 @@ import path from "path";
 
 export const runtime = "nodejs";
 
-type Payload = {
-  quotation: {
-    quoteNumber?: string;
-    guestName: string;
-    guestPhone?: string;
-    guestIdType?: string;
-    guestIdNumber?: string;
-
-    checkin?: string;
-    checkout?: string;
-    nights?: number;
-    adults?: number;
-    children?: number;
-
-    roomTotal?: number;
-    mealTotal?: number;
-    addonTotal?: number;
-    discount?: number;
-    totalAmount?: number;
-  };
-
-  rooms?: Array<{
-    roomNumber: string;
-    roomTypeName?: string;
-    pricePerNight?: number;
-  }>;
-
-  mealPlan?: {
-    name?: string;
-    price?: number;
-  } | null;
-
-  addons?: Array<{
-    name: string;
-    price?: number;
-  }>;
-};
-
-const formatDate = (d?: string) =>
-  d
-    ? new Date(d).toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      })
-    : "";
-
-const lkr = (v?: number) =>
-  (v ?? 0).toLocaleString("en-LK", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-
 export async function POST(req: Request) {
   try {
-    const body = (await req.json()) as Partial<Payload>;
+    const body  = await req.json();
 
-    const quotation = body.quotation;
-    const rooms = body.rooms ?? [];
-    const mealPlan = body.mealPlan;
-    const addons = body.addons ?? [];
+    const data = body.quotation ?? body;
 
-    if (!quotation || !quotation.guestName) {
-      return NextResponse.json(
-        { html: "", error: "Missing quotation data" },
-        { status: 400 }
-      );
-    }
+    console.log("Quotation data received:", data);
 
-    const templatePath = path.join(process.cwd(), "templates", "quotation.html");
+    const templatePath = path.join(
+      process.cwd(),
+      "templates",
+      "quotation.html"
+    );
 
-    if (!fs.existsSync(templatePath)) {
-      return NextResponse.json(
-        { html: "", error: `Template not found: ${templatePath}` },
-        { status: 500 }
-      );
-    }
-
-    let html = fs.readFileSync(templatePath, "utf8");
-
-    const totalGuests =
-      (quotation.adults ?? 0) + (quotation.children ?? 0);
-
-    const totalAmount =
-      quotation.totalAmount ??
-      (quotation.roomTotal ?? 0) +
-        (quotation.mealTotal ?? 0) +
-        (quotation.addonTotal ?? 0) -
-        (quotation.discount ?? 0);
-
-    // ---------------- BUILD ITEMS ----------------
+    let html = fs.readFileSync(
+      templatePath,
+      "utf8"
+    );
 
     const items: any[] = [];
 
-    // Rooms
-    rooms.forEach((r) => {
-      if (!quotation.nights || !r.pricePerNight) return;
+// Rooms
+(data.rooms ?? []).forEach((room: any) => {
+  items.push({
+    desc: `Room ${room.roomNumber}${
+      room.roomTypeName
+        ? ` - ${room.roomTypeName}`
+        : ""
+    }`,
+    qty: data.nights ?? 1,
+    rate: room.pricePerNight ?? 0,
+    amount:
+      (room.pricePerNight ?? 0) *
+      (data.nights ?? 1),
+  });
+});
 
-      items.push({
-        desc: `Room ${r.roomNumber}${
-          r.roomTypeName ? ` - ${r.roomTypeName}` : ""
-        }\n${quotation.checkin} - ${quotation.checkout} (${quotation.nights}N)`,
-        qty: quotation.nights,
-        rate: r.pricePerNight,
-        amount: r.pricePerNight * quotation.nights,
-      });
+// Meal Plan
+if (data.mealPlan) {
+  const qty =
+    (data.guestsCount ?? 1) *
+    (data.nights ?? 1);
+
+  items.push({
+    desc: `Meal Plan - ${data.mealPlan.name}`,
+    qty,
+    rate: data.mealPlan.price ?? 0,
+    amount:
+      (data.mealPlan.price ?? 0) * qty,
+  });
+}
+
+// Addons
+(data.addons ?? []).forEach(
+  (addon: any) => {
+    items.push({
+      desc: addon.name,
+      qty: 1,
+      rate: addon.price ?? 0,
+      amount: addon.price ?? 0,
     });
+  }
+);
 
-    // Meal Plan
-    if (mealPlan && quotation.nights && totalGuests) {
-      const qty = quotation.nights * totalGuests;
-
-      items.push({
-        desc: `Meal Plan - ${mealPlan.name}`,
-        qty,
-        rate: mealPlan.price ?? 0,
-        amount: (mealPlan.price ?? 0) * qty,
-      });
-    }
-
-    // Add-ons
-    addons.forEach((a) => {
-      items.push({
-        desc: a.name,
-        qty: 1,
-        rate: a.price ?? 0,
-        amount: a.price ?? 0,
-      });
-    });
-
-    const itemsHtml = items
-      .map(
-        (it, idx) => `
+const itemsHtml = items
+  .map(
+    (it, idx) => `
 <tr>
   <td>${idx + 1}</td>
-  <td>${(it.desc || "").replace(/\n/g, "<br/>")}</td>
+  <td>${it.desc}</td>
   <td style="text-align:right">${it.qty}</td>
-  <td style="text-align:right">${lkr(it.rate)}</td>
-  <td style="text-align:right">${lkr(it.amount)}</td>
-</tr>`
-      )
-      .join("");
-
-    // ---------------- REPLACE TEMPLATE VALUES ----------------
+  <td style="text-align:right">${it.rate}</td>
+  <td style="text-align:right">${it.amount}</td>
+</tr>
+`
+  )
+  .join("");
 
     html = html
-      .replaceAll("{{quoteNumber}}", quotation.quoteNumber || "—")
-      .replaceAll("{{guestName}}", quotation.guestName || "—")
-      .replaceAll("{{guestPhone}}", quotation.guestPhone || "—")
-      .replaceAll("{{guestIdType}}", quotation.guestIdType || "")
-      .replaceAll("{{guestIdNumber}}", quotation.guestIdNumber || "")
-      .replaceAll("{{checkin}}", formatDate(quotation.checkin))
-      .replaceAll("{{checkout}}", formatDate(quotation.checkout))
-      .replaceAll("{{nights}}", String(quotation.nights ?? 0))
-      .replaceAll("{{guestsCount}}", String(totalGuests))
+      .replaceAll("{{quoteNumber}}",data.quoteNumber ??String(data.id ?? ""))
+      .replaceAll("{{guestName}}", data.guestName ?? "")
+      .replaceAll("{{guestPhone}}", data.guestPhone ?? "")
+      .replaceAll("{{guestIdType}}", data.guestIdType ?? "")
+      .replaceAll("{{guestIdNumber}}", data.guestIdNumber ?? "")
+      .replaceAll("{{checkin}}", data.checkin ?? "")
+      .replaceAll("{{checkout}}", data.checkout ?? "")
+      .replaceAll("{{nights}}", String(data.nights ?? 0))
+      .replaceAll("{{guestsCount}}", String(data.guestsCount ?? 0))
+      .replaceAll("{{roomTotal}}", String(data.roomTotal ?? 0))
+      .replaceAll("{{mealTotal}}", String(data.mealTotal ?? 0))
+      .replaceAll("{{addonTotal}}", String(data.addonTotal ?? 0))
+      .replaceAll("{{discount}}", String(data.discount ?? 0))
+      .replaceAll("{{totalAmount}}", String(data.totalAmount ?? 0))
+      .replaceAll("{{quoteDate}}",data.quoteDate? new Date(data.quoteDate).toLocaleDateString("en-GB"): "")
+      .replaceAll("{{validUntil}}",data.validUntil? new Date(data.validUntil).toLocaleDateString("en-GB"): "")
+      .replaceAll("{{companyName}}", "Umar Garden")
+      .replaceAll("{{companyAddress}}", "Kandy, Sri Lanka")
+      .replaceAll("{{companyPhone}}", "+94 77 1234567")
+      .replaceAll("{{companyEmail}}", "info@umargarden.com")
+      .replaceAll("{{logoUrl}}", "https://res.cloudinary.com/dgm9hbcb1/image/upload/v1775286919/c79kbg4orwqwj9j3ftnp.png")
       .replaceAll("{{items}}", itemsHtml)
-      .replaceAll("{{roomTotal}}", lkr(quotation.roomTotal))
-      .replaceAll("{{mealTotal}}", lkr(quotation.mealTotal))
-      .replaceAll("{{addonTotal}}", lkr(quotation.addonTotal))
-      .replaceAll("{{discount}}", lkr(quotation.discount))
-      .replaceAll("{{totalAmount}}", lkr(totalAmount))
-      .replaceAll("{{quoteDate}}", formatDate(new Date().toISOString()))
-      .replaceAll(
-        "{{validUntil}}",
-        formatDate(
-          new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
-        )
-      );
 
-    return NextResponse.json({ html });
+    return NextResponse.json({
+      html,
+    });
   } catch (err: any) {
-    console.error("quotation-html error:", err);
     return NextResponse.json(
-      { html: "", error: err?.message || "Failed to render quotation HTML" },
-      { status: 500 }
+      {
+        error: err.message,
+      },
+      {
+        status: 500,
+      }
     );
   }
 }
