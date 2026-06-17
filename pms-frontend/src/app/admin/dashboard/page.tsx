@@ -632,7 +632,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Right Column */}
-          <div className="space-y-6">
+          <div className="space-y-6 gap-0 md:gap-6 lg:gap-0 grid md:grid-cols-2 lg:grid-cols-1">
             {/* Rooms Availability */}
             <div className="bg-white rounded-2xl p-6 shadow border border-gray-100">
               <h3 className="text-lg font-semibold mb-3 text-gray-700">Rooms Availability</h3>
@@ -715,7 +715,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Alerts */}
-            <div className="bg-white max-h-[300px] overflow-y-auto hide-scrollbar rounded-2xl shadow border border-gray-100 h-fit px-6">
+            <div className="hidden lg:block bg-white max-h-[300px] overflow-y-auto hide-scrollbar rounded-2xl shadow border border-gray-100 h-fit px-6">
               <div className="sticky top-0 z-20 bg-white py-4 border-b border-gray-100">
                 <h2 className="text-[16px] font-semibold">Alerts</h2>
               </div>
