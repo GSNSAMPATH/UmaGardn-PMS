@@ -586,7 +586,7 @@ export default function AdminDashboard() {
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-150 whitespace-nowrap md:w-full text-sm ">
+                <table className="w-150 whitespace-nowrap table-auto md:w-full text-sm ">
                   <thead className="text-gray-500">
                     <tr>
                       <th className="py-3 text-left">Booking ID</th>
