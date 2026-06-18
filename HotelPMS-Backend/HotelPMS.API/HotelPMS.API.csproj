@@ -32,4 +32,11 @@
     <ProjectReference Include="..\HotelPMS.Domain\HotelPMS.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Templates\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

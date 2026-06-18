@@ -66,7 +66,9 @@ public class BookingController : ControllerBase
          // ✅ Send email
         try
         {
+#pragma warning disable CS8604 // Possible null reference argument.
             await _emailService.SendEmailAsync(dto.Guest.Email, "Your Booking Confirmation", emailBody);
+#pragma warning restore CS8604 // Possible null reference argument.
         }
         catch (Exception ex)
         {
