@@ -519,12 +519,12 @@ export default function AdminDashboard() {
             <div className="rounded-2xl border border-gray-200/10 bg-white p-6 shadow">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold text-gray-800">Revenue</h2>
-                <span className="text-xs px-3 py-1 rounded-full bg-bLACK/50 text-black/80">
+                <span className="text-xs px-3 py-1 rounded-full bg-gray/50 text-black/80">
                   {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}
                 </span>
               </div>
 
-              <div style={{ width: "100%", height: 260 }}>
+              <div style={{ width: "100%", height: 260 }} className="-mx-4 lg:-mx-0">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={monthlyChartData} margin={{ left: 6, right: 6, top: 10, bottom: 0 }}>
                     <defs>
@@ -581,12 +581,12 @@ export default function AdminDashboard() {
                       onChange={(e) => setSearchGuest(e.target.value)}
                     />
                   </div>
-                  <button className="bg-black text-white px-4 py-2 rounded-full text-sm font-semibold">+ New Guest</button>
+                  <button className="hidden md:block bg-black text-white px-4 py-2 rounded-full text-sm font-semibold">+ New Guest</button>
                 </div>
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-150 whitespace-nowrap text-sm ">
                   <thead className="text-gray-500">
                     <tr>
                       <th className="py-3 text-left">Booking ID</th>
