@@ -49,10 +49,11 @@ public class BookingController : ControllerBase
             if (!available)
                 return BadRequest($"Room {room.RoomId} is not available.");
         }
-
+        
         var booking = await _repo.CreateFullBookingAsync(dto);
         var payment = booking.Payments.FirstOrDefault();
 
+    
         string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", "Emails", "BookingConfirmation.html");
         string emailTemplate = await System.IO.File.ReadAllTextAsync(templatePath);
 
