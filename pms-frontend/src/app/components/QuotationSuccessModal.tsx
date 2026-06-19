@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { useReactToPrint } from "react-to-print";
+import html2pdf from "html2pdf.js";
 import QuotationTemplate from "./QuotationTemplate";
 
 interface Props {
@@ -15,16 +14,56 @@ export default function QuotationSuccessModal({
   onClose,
   quotationData,
 }: Props) {
-  const quotationRef = useRef<HTMLDivElement>(null);
-
-  console.log("Quotation data in modal:", quotationData);
-
-  const handlePrint = useReactToPrint({
-    contentRef: quotationRef,
-    documentTitle: `Quotation-${quotationData?.id ?? ""}`,
-  });
-
   if (!open) return null;
+
+  const handlePrint = async () => {
+    let element =
+      document.getElementById(
+        "quotation-content"
+      );
+
+    if (!element) {
+      await new Promise((resolve) =>
+        setTimeout(resolve, 1500)
+      );
+
+      element =
+        document.getElementById(
+          "quotation-content"
+        );
+    }
+
+    if (!element) {
+      alert(
+        "Quotation template is still loading."
+      );
+      return;
+    }
+
+    await html2pdf()
+      .set({
+        margin: 10,
+        filename: `Quotation-${
+          quotationData.quoteNumber ??
+          quotationData.id
+        }.pdf`,
+        image: {
+          type: "jpeg",
+          quality: 1,
+        },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+        },
+        jsPDF: {
+          unit: "mm",
+          format: "a4",
+          orientation: "portrait",
+        },
+      })
+      .from(element)
+      .save();
+  };
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
@@ -53,23 +92,23 @@ export default function QuotationSuccessModal({
             onClick={handlePrint}
             className="px-4 py-2 bg-black text-white rounded-full"
           >
-            Print Quotation
+            Download PDF
           </button>
         </div>
 
-        {/* Hidden Printable Area */}
+        {/* Hidden PDF Template */}
         <div
           style={{
-            position: "absolute",
-            left: "-9999px",
+            position: "fixed",
+            left: "-99999px",
             top: 0,
+            width: "800px",
+            background: "#fff",
           }}
         >
-          <div ref={quotationRef}>
-            <QuotationTemplate
-              quotation={quotationData}
-            />
-          </div>
+          <QuotationTemplate
+            quotation={quotationData}
+          />
         </div>
       </div>
     </div>

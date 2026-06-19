@@ -16,7 +16,9 @@ export default function QuotationTemplate({
     (async () => {
       try {
         setLoading(true);
-        const res = await fetch("/api/quatation-html",
+
+        const res = await fetch(
+          "/api/quatation-html",
           {
             method: "POST",
             headers: {
@@ -24,7 +26,7 @@ export default function QuotationTemplate({
                 "application/json",
             },
             body: JSON.stringify(
-              quotation,
+              quotation
             ),
           }
         );
@@ -61,10 +63,12 @@ export default function QuotationTemplate({
   }
 
   return (
-    <div
-      dangerouslySetInnerHTML={{
-        __html: html,
-      }}
-    />
+    <div id="quotation-content">
+      <div
+        dangerouslySetInnerHTML={{
+          __html: html,
+        }}
+      />
+    </div>
   );
 }

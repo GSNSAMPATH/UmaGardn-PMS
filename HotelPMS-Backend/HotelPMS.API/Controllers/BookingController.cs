@@ -27,6 +27,14 @@ public class BookingController : ControllerBase
 
     }
 
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllBookings()
+    {
+        var bookings = await _repo.GetAllBookingsAsync();
+        return Ok(bookings);
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateBooking([FromBody] CreateBookingDto dto)
     {

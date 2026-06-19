@@ -22,6 +22,7 @@ export default function LoginPage() {
 };
 
   const handleLogin = async () => {
+    console.log("Logging in with:", email, password);
     setError("");
 
     try {

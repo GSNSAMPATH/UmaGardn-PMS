@@ -61,8 +61,14 @@ builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(
-            new JsonStringEnumConverter(namingPolicy: null, allowIntegerValues: false)
+            new JsonStringEnumConverter(
+                namingPolicy: null,
+                allowIntegerValues: false
+            )
         );
+
+        options.JsonSerializerOptions.ReferenceHandler =
+            ReferenceHandler.IgnoreCycles;
     });
 
 builder.Services.AddDbContext<AppDbContext>(options =>
