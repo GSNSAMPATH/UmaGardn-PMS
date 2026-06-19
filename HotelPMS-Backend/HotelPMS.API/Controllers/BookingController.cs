@@ -203,9 +203,11 @@ public class BookingController : ControllerBase
         var booking = await _repo.GetBookingByIdAsync(request.BookingId);
 
         // ✅ Load check-out confirmation email template
-        string emailTemplate = await System.IO.File.ReadAllTextAsync(
-            Path.Combine(Directory.GetCurrentDirectory(), "Templates", "Emails", "CheckOutConfirmation.html")
-        );
+        string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", "Emails", "CheckoutConfirmation.html");
+        string emailTemplate = await System.IO.File.ReadAllTextAsync(templatePath);
+        // string emailTemplate = await System.IO.File.ReadAllTextAsync(
+        //     Path.Combine(Directory.GetCurrentDirectory(), "Templates", "Emails", "CheckoutConfirmation.html")
+        // );
 
         var primaryGuest = booking.Guests.FirstOrDefault();
         string guestName = primaryGuest?.Name ?? "";
