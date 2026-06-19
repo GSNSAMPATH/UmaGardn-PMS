@@ -225,11 +225,21 @@ export default function CancelBookingScreen() {
               </div>
               <div>
                 <Label className="flex items-center gap-2 mb-1 text-sm">
-                  <FaUser size={12} /> Advance Paid
+                  <FaUser size={12} /> Advance 
                 </Label>
                 <Input placeholder="Advance Paid" value={money(advancePaid)} disabled />
               </div>
 
+              <div className="md:col-span-2 lg:hidden flex justify-end gap-3">
+
+              <Button
+                onClick={fetchBookingByGuest}
+                disabled={!idType || !idNumber || loading}
+                className=""
+              >
+                Search
+              </Button>
+              </div>
               <div className="md:col-span-2 flex gap-3"></div>
             </div>
           </Section>
