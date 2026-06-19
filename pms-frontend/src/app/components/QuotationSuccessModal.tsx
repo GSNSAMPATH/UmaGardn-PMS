@@ -1,6 +1,5 @@
 "use client";
 
-import html2pdf from "html2pdf.js";
 import QuotationTemplate from "./QuotationTemplate";
 
 interface Props {
@@ -17,52 +16,66 @@ export default function QuotationSuccessModal({
   if (!open) return null;
 
   const handlePrint = async () => {
-    let element =
-      document.getElementById(
-        "quotation-content"
-      );
+    try {
+      const html2pdf =
+        (await import("html2pdf.js")).default;
 
-    if (!element) {
-      await new Promise((resolve) =>
-        setTimeout(resolve, 1500)
-      );
-
-      element =
+      let element =
         document.getElementById(
           "quotation-content"
         );
-    }
 
-    if (!element) {
-      alert(
-        "Quotation template is still loading."
+      if (!element) {
+        await new Promise((resolve) =>
+          setTimeout(resolve, 1500)
+        );
+
+        element =
+          document.getElementById(
+            "quotation-content"
+          );
+      }
+
+      if (!element) {
+        alert(
+          "Quotation template is still loading."
+        );
+        return;
+      }
+
+      await html2pdf()
+        .set({
+          margin: 10,
+          filename: `Quotation-${
+            quotationData.quoteNumber ??
+            quotationData.id
+          }.pdf`,
+          image: {
+            type: "jpeg",
+            quality: 1,
+          },
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+          },
+          jsPDF: {
+            unit: "mm",
+            format: "a4",
+            orientation: "portrait",
+          },
+        })
+        .from(element)
+        .save();
+    } catch (err) {
+      console.error(
+        "Failed to generate PDF",
+        err
       );
-      return;
-    }
 
-    await html2pdf()
-      .set({
-        margin: 10,
-        filename: `Quotation-${
-          quotationData.quoteNumber ??
-          quotationData.id
-        }.pdf`,
-        image: {
-          type: "jpeg",
-          quality: 1,
-        },
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-        },
-        jsPDF: {
-          unit: "mm",
-          format: "a4",
-          orientation: "portrait",
-        },
-      })
-      .from(element)
-      .save();
+      alert(
+        "Failed to generate quotation PDF."
+      );
+    }
   };
 
   return (
