@@ -7,8 +7,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
-using HotelPMS.Domain.Entities; // ✅ brings in StaffRole, RoomStatus, etc.
+using HotelPMS.Domain.Entities; 
 using System.Text;
+using DotNetEnv;
+
+Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,14 +49,13 @@ builder.Services.AddScoped<IErrorLogRepository, ErrorLogRepository>();
 builder.Services.AddScoped<IQuotationRepository, QuotationRepository>();
 
 
-
 builder.Services.AddScoped(sp =>
     new EmailService(
-        host: "smtp.gmail.com",      // or smtp.office365.com
-        port: 587,
-        from: "sumalnadera81@gmail.com",
-        username: "sumalnadira123@gmail.com",
-        password: "chbr ftqm wlxb svjr" // use app password, not normal login
+        host: Env.GetString("SMTP_HOST"),
+        port: Env.GetInt("SMTP_PORT"),
+        from: Env.GetString("SMTP_FROM"),
+        username: Env.GetString("SMTP_USERNAME"),
+        password: Env.GetString("SMTP_PASSWORD")
     )
 );
 
